@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    攻击者信息详细
+{% endblock %}
+
+{% block info %}
+    攻击信息详细
+{% endblock %}
+
+{% block info1 %}
+    <li class="mdi mdi-account-card-details"></li> 攻击者编号(HID): {{ attacker.hid }}
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-4 col-xl-2">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="text-center"><img src="{{ url_for('static', filename='images/users/hacker.png') }}" alt="" class="rounded-circle img-thumbnail w-50">
+                        <h4 class="font-16">{{ attacker.ip }}</h4>
+                        <p class="text-muted font-14">攻击时间: {{ attacker.create_time }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xl-10">
+            <div class="tab-2 m-b-30">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" href="#base-info" data-toggle="tab"
+                                            aria-expanded="false">基础信息</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portrait-info" data-toggle="tab"
+                                            aria-expanded="false">画像信息</a></li>
+                </ul>
+                <div class="tab-content bg-white">
+                    <div class="tab-pane active home-text p-4" id="base-info">
+                        <h6>
+                            <li class="mdi mdi-web"></li>
+                            地址: {{ city }}</h6>
+                        <li class="mdi mdi-chevron-right"> 目标: {{ attacker.host }}</li>
+                        <br>
+                        <li class="mdi mdi-chevron-right"> UA: {{ attacker.user_agent }}</li>
+                    </div>
+                    <div class="tab-pane p-4" id="portrait-info">
+                        <h6>
+                            <li class="mdi mdi-web"></li>
+                            经纬度
+                        </h6>
+                        {% for x in xy[0] %}{% if x[1] != None %}
+                            <li class="mdi mdi-chevron-right"></li> {{ x[1] }},{{ x[0] }} |
+                            <a href="javascript:get_address({{ x[1] }},{{ x[0] }})">物理地址转换</a><br>{% else %}
+                        {% endif %}{% endfor %}{% if xy[1] != None %}
+                            <li class="mdi mdi-chevron-right"></li> 定位中心点: {{ xy[1][1] }},{{ xy[1][0] }} |
+                            <a href="javascript:get_address({{ xy[1][1] }},{{ xy[1][0] }})">物理地址转换</a>{% else %}{% endif %}
+                        <hr>
+                        <h6>
+                            <li class="mdi mdi-account-box-outline"></li>
+                            网络身份
+                        </h6>
+                        {% for h in hackinfo.keys() %}
+                            <li class="mdi mdi-chevron-right"></li> <code>{{ h }}</code>: {{ hackinfo[h] }}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if xy[1] != None %}
+        <div class="row">
+            <div class="col-md-12 col-xl-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">地图展示</h4>
+                        <iframe src="{{ url_for('maps') }}#{{ xy[0][0][1] }},{{ xy[0][0][0] }}&{{ xy[0][1][1] }},{{ xy[0][1][0] }}&{{ xy[1][1] }},{{ xy[1][0] }}"
+                                frameborder="1" style="height: 500px;width: 100%;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        function get_address(x, y) {
+            var url = "{{ url_for('locations') }}";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "lat": x,
+                    "lng": y
+                },
+                dataType: "json",
+                success: function (json) {
+                    message = JSON.parse(JSON.stringify(json));
+                    if (message['success'] == 1) {
+                        alert(message['message']);
+                    } else {
+                        alert("获取物理位置失败！");
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

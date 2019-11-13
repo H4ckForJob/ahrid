@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    系统管理
+{% endblock %}
+
+{% block info %}
+    系统管理
+{% endblock %}
+
+{% block info1 %}
+    系统管理
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <h4 class="mt-0 header-title">用户列表</h4>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>用户名</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for u in user %}
+                            <tr>
+                                <td scope="row">{{ u.id }}</td>
+                                <td>{{ u.username }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-info" style="float: none; margin: 5px;"
+                                            id="deluser" value="{{ url_for('del_user', uid=u.id) }}"
+                                            onclick="deluser(this.value)"><span class="ti-trash"></span></button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <h4 class="mt-0 header-title">用户创建</h4>
+                    <p class="text-muted m-b-30 font-14">创建<code>AHRID</code>平台的用户</p>
+                    <div class="general-label">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="sr-only" for="username">用户名</label>
+                                <input type="text" class="form-control ml-1" id="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="password">密码</label>
+                                <input type="password" class="form-control ml-1" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-info ml-1" id="adduser">Add</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $("#adduser").click(function (event) {
+            var url = "{{ url_for('add_user') }}";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "username": $("#username").val(),
+                    "password": $("#password").val()
+                },
+                dataType: "json",
+                success: function (json) {
+                    message = JSON.parse(JSON.stringify(json))
+                    if (message['success'] == 1) {
+                        alert(message['message']);
+                        window.location.href = message['url'];
+                    } else {
+                        alert(message['message']);
+                    }
+                }
+            });
+        });
+
+        function deluser(url) {
+            var isdel = confirm("是否确定删除该用户？");
+            if (isdel) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    success: function (json) {
+                        message = JSON.parse(JSON.stringify(json));
+                        if (message['success'] == 1) {
+                            alert(message['message']);
+                            window.location.href = message['url'];
+                        } else {
+                            alert(message['message']);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

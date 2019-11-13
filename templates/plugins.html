@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    模块信息
+{% endblock %}
+
+{% block info %}
+    模块管理 > 模块信息
+{% endblock %}
+
+{% block info1 %}
+    模块信息
+{% endblock %}
+
+{% block css %}
+<style>
+
+td {
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+</style>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <h4 class="mt-0 header-title">JSONP探针信息</h4>
+                    <table class="table" style="table-layout: fixed;">
+                        <thead class="thead-default">
+                        <tr>
+                            <th>模块名</th>
+                            <th>模块地址</th>
+                            <th>回调参数</th>
+                            <th>信息展示</th>
+                            <th>模块描述</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for p in plugins %}
+                        <tr>
+                            <td title="{{ p.name }}">{{ p.name }}</td>
+                            <td title="{{ p.src }}">{{ p.src }}</td>
+                            <td title="{{ p.callback }}">{{ p.callback }}</td>
+                            <td title="{{ p.url }}">{{ p.url }}</td>
+                            <td title="{{ p.commit }}">{{ p.commit }}</td>
+                            <td><a href="{{ url_for('plugins_detail',pid=p.pid) }}">详情</a> | <a href='javascript:delplugin("{{ url_for('del_plugin', pid=p.pid) }}")'>删除</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- end col -->
+        <!-- end col -->
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function delplugin(url) {
+            var isdel = confirm("是否确定删除该模块？");
+            if (isdel) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    success: function (json) {
+                        message = JSON.parse(JSON.stringify(json));
+                        if (message['success'] == 1) {
+                            alert(message['message']);
+                            window.location.href = message['url'];
+                        } else {
+                            alert(message['message']);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

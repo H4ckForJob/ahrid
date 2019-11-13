@@ -1,0 +1,117 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>Maps</title>
+    <style type="text/css">
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }
+
+        #allmap audio,
+        #allmap canvas,
+        #allmap img,
+        #allmap svg,
+        #allmap video {
+            max-width: none !important
+        }
+    </style>
+</head>
+
+<body>
+<div id="allmap"></div>
+</body>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=jMBhzgRuml9p2ouvLD3rrEXFe62mUMuW"></script>
+<script type="text/javascript">
+    var BMapPointIcon = "data:image/gif;base64,R0lGODlhDAANAPUBAOr5/h24/wzD/xeb9Be9/xDA/xO+/yWx/zys+Bm7/x+v/Ryj+x+2/0Gu+STM/yW0/xSr/I7R/CK1//v+/53V/EbO/X/M+zSm9tnz/kSx+uX3/kO8+0nB/HLH++Dx/tTw/tTo/gyX//b7/0GN+R2P/xmR/xCV/xeS/xOU/yGO/yWK/xuI+xt6+xh09TaI9yKm//r9/ySM/xhv9I+9/Nvs/oG1+w2W/53E/EOa+0as/eXy/i6C+eny/nKu+0mh/AAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Rjc4NUE5REI1N0U4MTFFN0FCQkVGODYyMUEzQjlDREYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Rjc4NUE5REM1N0U4MTFFN0FCQkVGODYyMUEzQjlDREYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGNzg1QTlEOTU3RTgxMUU3QUJCRUY4NjIxQTNCOUNERiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGNzg1QTlEQTU3RTgxMUU3QUJCRUY4NjIxQTNCOUNERiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAUlAAEALAAAAAAMAA0AAAZswIBwSCTCbqOWbDQTDXkjXO4VOq1ctABs5KOGQjbTVXTDeUMmE+rEmo1y3zBqXVIlqWl6iZSStdBzJ3t8MS0jJHp8KTErIzUrgiSEKiptOjsrijGULCMAIiA7LCuUKyxYMCIwOj0uSo40IiJBACH5BAUhACAALAAAAQAMAAwAAAZlQBBoQskMBoiIUAhobCoOAUGB8AgznKhgW4BcQJSNVlAoGAiQSKOyJRvOiUNjEC3DAwHG0X3PP5ABfQwSDwoNFgoECXiDBwcLERoLEHmED48IQh+TCo4KCwgYQhMaHRdHCBaiIEEAOw==";
+
+    var map = new BMap.Map("allmap");
+    var zoomlevel = '15'; //地图zoom级别
+
+    var lng = new Array();
+    var lat = new Array();
+    var radius = new Array();
+
+    var all = window.location.hash.replace('#', '').split('&');
+
+    for (var i = 0; i < all.length; i++) {
+        lat[i] = all[i].split(',')[0];
+        lng[i] = all[i].split(',')[1];
+    }
+
+    radius[0] = 2000;
+
+    radius[1] = 2000;
+
+    radius[2] = -1;
+
+    // 百度地图API功能
+    var point = new BMap.Point(lng[2], lat[2]);
+    map.centerAndZoom(point, zoomlevel);
+    map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+    map.addControl(new BMap.MapTypeControl()); //添加地图类型控件 -地图 微信  new BMap.MapTypeControl({ mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP] })
+    // 添加地图类型控件，控件展示的地图类型为普通图、卫星加路网混合图
+    //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]}));
+
+    map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT})); //比例尺
+    map.addControl(new BMap.GeolocationControl()); //定位到当前
+    //setTimeout(function(){map.panTo(new BMap.Point(lng[0], lat[0]));}, 100);//100ms后移动到第一个中心
+    // 添加带有定位的导航控件
+    var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true
+    });
+    map.addControl(navigationControl); // 添加定位控件
+
+    // 覆盖区域图层测试
+    //map.addTileLayer(new BMap.PanoramaCoverageLayer());//测试用的
+    var stCtrl = new BMap.PanoramaControl(); //构造全景控件
+    stCtrl.setOffset(new BMap.Size(20, 50));
+    map.addControl(stCtrl); //添加全景控件
+
+    // 编写自定义函数,创建标注
+    for (let i = 0; i < lng.length; i++) {
+        var point = new BMap.Point(lng[i], lat[i]);
+        var sContent = "地区：";
+        if (i == 2) {
+            sContent = sContent + "中心点";
+        } else {
+            sContent = sContent + (i + 1);
+        }
+        sContent = sContent + "<br>纬度：" + lat[i] + "<br>经度：" + lng[i];
+        if (radius[i] > 0) {
+            sContent = sContent + "<br>半径：" + radius[i];
+        }
+        var label = new BMap.Label(sContent, {offset: new BMap.Size(20, -10 * i)});
+        addMarker(point, BMapPointIcon);
+        marker.setLabel(label);
+        addCircle(point, radius[i]); //增加圆
+    }
+
+    function addMarker(point, BMapPointIcon) {
+        var myIcon = new BMap.Icon(BMapPointIcon, new BMap.Size(12, 13));
+        marker = new BMap.Marker(point, {icon: myIcon});
+        map.addOverlay(marker); //添加红点
+
+    }
+
+    function addCircle(point, radius) {
+        //增加圆 {fillOpacity:0.5, strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.8 }
+        var circle = new BMap.Circle(point, radius, {
+            strokeColor: "red",
+            fillColor: "red",
+            strokeWeight: 2,
+            fillOpacity: 0.001,
+            strokeOpacity: 0.8
+        });
+        map.addOverlay(circle); //增加圆
+        circle.hide();
+        circle.show();
+        //hideOver();
+    }
+</script>
+</html>

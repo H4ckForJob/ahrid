@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    攻击信息
+{% endblock %}
+
+{% block info %}
+    攻击信息
+{% endblock %}
+
+{% block info1 %}
+    攻击信息
+{% endblock %}
+
+{% block css %}
+    <link href="{{ url_for('static', filename="css/dataTables.bootstrap4.min.css") }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ url_for('static', filename="css/buttons.bootstrap4.min.css") }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <h4 class="mt-0 header-title">攻击信息列表展示</h4>
+                    <table id="datatable" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>HID</th>
+                            <th>IP</th>
+                            <th>国家</th>
+                            <th>攻击目标</th>
+                            <th>UA</th>
+                            <th>攻击时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        {% for hacker in attackers %}
+                            <tr>
+                                <td>{{ hacker.hid }}</td>
+                                <td class="ip">{{ hacker.ip }}</td>
+                                <td class="country"></td>
+                                <td>{{ hacker.host }}</td>
+                                <td>{{ hacker.user_agent }}</td>
+                                <td>{{ hacker.create_time }}</td>
+                                <td><a href="{{ url_for('attacker_detail', hid=hacker.hid) }}">查看详情</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/datatables.init.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script>
+        get_country("{{ url_for('get_country') }}");
+    </script>
+{% endblock %}

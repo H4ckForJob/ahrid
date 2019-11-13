@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    用户信息
+{% endblock %}
+
+{% block info %}
+    用户信息
+{% endblock %}
+
+{% block info1 %}
+    用户信息
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-4 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="text-center"><img src="{{ url_for('static',filename='images/users/avatar.png') }}"
+                                                  alt="" class="rounded-circle img-thumbnail w-50">
+                        <h4 class="font-16"><code>用户名 </code>{{ user.username }}</h4>
+                        <p class="text-muted font-14"><code>登陆IP </code>[ {{ loginip }} ]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xl-7">
+            <div class="card bg-white m-b-30">
+                <div class="card-body">
+                    <div class="general-label">
+                        <div class="form-group"><label for="oldpassword">当前密码</label> <input type="password"
+                                                                                             class="form-control"
+                                                                                             id="oldpassword"
+                                                                                             placeholder="Old Password">
+                        </div>
+                        <div class="form-group"><label for="newpassword">新密码</label> <input type="password"
+                                                                                            class="form-control"
+                                                                                            id="newpassword"
+                                                                                            placeholder="New Password">
+                        </div>
+                        <div class="form-group"><label for="newpassword1">再次确认新密码</label> <input type="password"
+                                                                                                 class="form-control"
+                                                                                                 id="newpassword1"
+                                                                                                 placeholder="New Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="savepwd">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $("#savepwd").click(function (event) {
+            var url = "{{ url_for('mofidy_pwd') }}";
+            if ($("#newpassword").val() == $("#newpassword1").val()) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        "oldpassword": $("#oldpassword").val(),
+                        "newpassword": $("#newpassword").val()
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        message = JSON.parse(JSON.stringify(json));
+                        if (message['success'] == 1) {
+                            alert(message['message']);
+                            window.location.href = message['url'];
+                        } else {
+                            alert(message['message']);
+                        }
+                    }
+                });
+            } else {
+                alert("新密码二次输入不正确！");
+            }
+
+        });
+    </script>
+{% endblock %}

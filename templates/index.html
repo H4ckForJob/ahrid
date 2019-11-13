@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    视图信息
+{% endblock %}
+
+{% block info %}
+    视图信息
+{% endblock %}
+
+{% block info1 %}
+    视图信息
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <div class="col-4 align-self-center">
+                            <div class="round">
+                                <i class="mdi mdi-account"></i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center align-self-center">
+                            <div class="m-l-10 ">
+                                <h5 class="mt-0 round-inner">{{ user_count }}</h5>
+                                <p class="mb-0 text-muted">用户</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <div class="col-4 align-self-center">
+                            <div class="round">
+                                <i class="mdi mdi-border-outside"></i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center align-self-center">
+                            <div class="m-l-10 ">
+                                <h5 class="mt-0 round-inner">{{ attacker_count }}</h5>
+                                <p class="mb-0 text-muted">黑客攻击者</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <div class="col-4 align-self-center">
+                            <div class="round">
+                                <i class="mdi mdi-webhook"></i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center align-self-center">
+                            <div class="m-l-10 ">
+                                <h5 class="mt-0 round-inner">{{ website_count }}</h5>
+                                <p class="mb-0 text-muted">被攻击站点</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <div class="col-4 align-self-center">
+                            <div class="round">
+                                <i class="mdi mdi-ungroup"></i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center align-self-center">
+                            <div class="m-l-10 ">
+                                <h5 class="mt-0 round-inner">{{ plugin_count }}</h5>
+                                <p class="mb-0 text-muted">分析模块</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-12 align-self-center">
+            <div class="card bg-white m-b-30">
+                <div class="card-body new-user">
+                    <h5 class="header-title mb-4 mt-0">TOP 10 Attacker</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="border-top-0" style="width:60px;">HID</th>
+                                <th class="border-top-0">IP</th>
+                                <th class="border-top-0">国家</th>
+                                <th class="border-top-0">攻击次数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for hacker in hackinfo %}
+                                <tr>
+                                    <td>{{ hacker.hid }}</td>
+                                    <td class="ip">{{ hacker.ip }}</td>
+                                    <td class="country">
+                                    </td>
+                                    <td>{{ hacker.times }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        get_country("{{ url_for('get_country') }}");
+    </script>
+{% endblock %}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>AHRID - 黑客攻击画像分析系统</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.ico') }}">
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static',filename='css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body class="fixed-left">
+
+<!-- Begin page -->
+<div class="wrapper-page">
+
+    <div class="card">
+        <div class="card-body">
+
+            <h3 class="text-center mt-0 m-b-15">
+                <a href="{{ url_for('login_page') }}" class="logo logo-admin"><img
+                        src="{{ url_for('static',filename='images/logo.png') }}" height="45" alt="logo"></a>
+            </h3>
+
+            <div class="p-3">
+                <div class="form-horizontal m-t-20">
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control" type="text" required="" placeholder="Username" id="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control" type="password" required="" placeholder="Password"
+                                   id="password">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group text-center row m-t-20">
+                        <div class="col-12">
+                            <button class="btn btn-danger btn-block waves-effect waves-light" type="submit" id="login">
+                                Log In
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery  -->
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/modernizr.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/detect.js') }}"></script>
+<script src="{{ url_for('static',filename='js/fastclick.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.blockUI.js') }}"></script>
+<script src="{{ url_for('static',filename='js/waves.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.nicescroll.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.scrollTo.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ url_for('static',filename='js/app.js') }}"></script>
+<script>
+    $("#login").click(function (event) {
+        var url = "{{ url_for('login') }}";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                "username": $("#username").val(),
+                "password": $("#password").val()
+            },
+            dataType: "json",
+            success: function (json) {
+                message = JSON.parse(JSON.stringify(json));
+                if (message['success'] == 1) {
+                    alert(message['message']);
+                    window.location.href = message['url'];
+                } else {
+                    alert(message['message']);
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

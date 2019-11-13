@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>AHRID - {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.ico') }}">
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static',filename='css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+    {% block css %}{% endblock %}
+</head>
+
+<body class="fixed-left">
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner"></div>
+    </div>
+</div>
+<!-- Begin page -->
+<div id="wrapper">
+    <div class="left side-menu">
+        <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
+            <i class="ion-close"></i>
+        </button>
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <div class="text-center">
+                <a href="{{ url_for('index_page') }}" class="logo"><img
+                        src="{{ url_for('static',filename='images/logo.png') }}" alt="logo" height="40px"></a>
+            </div>
+        </div>
+        <div class="sidebar-inner slimscrollleft">
+            <div id="sidebar-menu">
+                <ul>
+                    <li class="menu-title">Main</li>
+                    <li>
+                        <a href="{{ url_for('index_page') }}" class="waves-effect">
+                            <i class="mdi mdi-airplay"></i>
+                            <span> 信息视图 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('setting_page') }}" class="waves-effect">
+                            <i class="mdi mdi-tune"></i> <span> 系统管理 </span>
+                        </a>
+                    </li>
+                    <li class="menu-title">AHRID</li>
+                    <li>
+                        <a href="{{ url_for('attacker_page') }}" class="waves-effect">
+                            <i class="mdi mdi-biohazard"></i> <span> 攻击信息 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('api_page') }}" class="waves-effect">
+                            <i class="mdi mdi-vector-square"></i> <span> 接口授权 </span>
+                        </a>
+                    </li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-module"></i><span> 模块管理 </span>
+                            <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ url_for('plugin_page') }}">模块信息</a></li>
+                            <li><a href="{{ url_for('submit_plugin_page') }}">提交模块</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div> <!-- end sidebarinner -->
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- Start right Content here -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <!-- Top Bar Start -->
+            <div class="topbar">
+                <nav class="navbar-custom">
+                    <ul class="list-inline float-right mb-0">
+                        <!-- language-->
+                        <li class="list-inline-item dropdown notification-list hide-phone">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect text-white"
+                               data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                               aria-expanded="false">
+                                Chinese <img src="{{ url_for('static',filename='images/flags/china.png') }}"
+                                             class="ml-2" height="16" alt="china"/>
+                            </a>
+                        </li>
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
+                               href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img src="{{ url_for('static',filename='images/users/avatar.png') }}" alt="user"
+                                     class="rounded-circle">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                <!-- item-->
+                                <div class="dropdown-item noti-title">
+                                    <h5>Welcome</h5>
+                                </div>
+                                <a class="dropdown-item" href="{{ url_for('profile_page') }}"><i
+                                        class="mdi mdi-account-circle m-r-5 text-muted"></i> 用户信息</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ url_for('logout') }}"><i
+                                        class="mdi mdi-logout m-r-5 text-muted"></i> 退出系统</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </nav>
+            </div>
+            <!-- Top Bar End -->
+            <div class="page-content-wrapper ">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                <div class="btn-group float-right">
+                                    <ol class="breadcrumb hide-phone p-0 m-0">
+                                        <li class="breadcrumb-item"><a href="#">AHRID</a></li>
+                                        <li class="breadcrumb-item active">{% block info %}{% endblock %}</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">{% block info1 %}{% endblock %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title end breadcrumb -->
+                    {% block main %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            © 2019 AHRID 黑客攻击画像分析系统 ｜ 米斯特安全团队
+        </footer>
+    </div>
+</div>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/modernizr.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/detect.js') }}"></script>
+<script src="{{ url_for('static',filename='js/fastclick.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.blockUI.js') }}"></script>
+<script src="{{ url_for('static',filename='js/waves.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.nicescroll.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.scrollTo.min.js') }}"></script>
+<!-- App js -->
+<script src="{{ url_for('static',filename='js/app.js') }}"></script>
+{% block js %}{% endblock %}
+</body>
+
+</html>
