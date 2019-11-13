@@ -423,5 +423,5 @@ def context_processor():
         return {}
 
 if __name__ == '__main__':
-    server = pywsgi.WSGIServer(('0.0.0.0', 89), app)
+    server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
     server.serve_forever()
